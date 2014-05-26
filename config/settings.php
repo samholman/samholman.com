@@ -15,6 +15,9 @@ App::register('regex:/^\/([a-z0-9_\-]*)$/i', 'Index');
 App::bind(
     'SamHolman\Article\Repository',
     function () {
+        if (!is_dir(Config::get('content_dir'))) {
+            throw new \Exception("The content directory doesn't exist. Check your config.");
+        }
         return App::make('\SamHolman\Article\FileRepository', [new \DirectoryIterator(Config::get('content_dir'))]);
     }
 );
