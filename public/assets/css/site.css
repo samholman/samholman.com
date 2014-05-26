@@ -33,7 +33,6 @@ header {
     background: #333;
     color: #fff;
     margin-bottom: 30px;
-    padding: 0 20px;
     border-bottom: 3px solid #666;
 }
 
@@ -73,9 +72,14 @@ header nav ul li a:hover {
 
 div.content {
     padding: 0 20px;
-    min-width: 300px;
-    max-width: 900px;
+    min-width: 340px;
+    max-width: 980px;
     margin: 0 auto;
+    box-sizing: border-box;
+}
+
+header div.content {
+    padding: 0 40px;
 }
 
 article {
@@ -89,6 +93,7 @@ article {
 
 article img {
     max-width: 100%;
+    margin-bottom: 10px;
 }
 
 article .title {
