@@ -6,7 +6,7 @@ class Config
         $_instance;
 
     private
-        $_settings = array();
+        $_settings = [];
 
     /**
      * Force singleton

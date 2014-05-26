@@ -1,6 +1,6 @@
 <?php namespace SamHolman\Controllers;
 
-abstract class BaseController
+abstract class BaseAbstract
 {
     /**
      * Handles GET requests

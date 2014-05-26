@@ -1,0 +1,11 @@
+<?php include_once(__DIR__ . '/../../includes/header.phtml') ?>
+
+<?php if ($this->article): ?>
+    <article>
+        <h1><?php echo $this->article->getTitle() ?></h1>
+        <time><?php echo $this->article->getDate()->format('D jS M Y') ?></time>
+        <?php echo $this->markdown($this->article->getContent()) ?>
+    </article>
+<?php endif ?>
+
+<?php include_once(__DIR__ . '/../../includes/footer.phtml') ?>

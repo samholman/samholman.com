@@ -3,4 +3,5 @@
 interface Repository
 {
     public function findAll();
+    public function find($slug);
 }

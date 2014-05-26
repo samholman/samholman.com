@@ -1,0 +1,11 @@
+<?php include_once(__DIR__ . '/../../includes/header.phtml') ?>
+
+<?php foreach ($this->articles as $article): ?>
+    <article>
+        <h2 class="title"><a href="<?php echo $article->getSlug() ?>"><?php echo $article->getTitle() ?></a></h2>
+        <time><?php echo $article->getDate()->format('D jS M Y') ?></time>
+        <?php echo $this->markdown($article->getContent()) ?>
+    </article>
+<?php endforeach ?>
+
+<?php include_once(__DIR__ . '/../../includes/footer.phtml') ?>

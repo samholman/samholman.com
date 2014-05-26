@@ -1,27 +1,34 @@
 <?php namespace SamHolman\Controllers;
 
-use \SamHolman\Input,
-    \SamHolman\View,
+use \SamHolman\View,
     \SamHolman\Article\Service as ArticleService;
 
-class Index extends BaseController
+class Index extends BaseAbstract
 {
     private
-        $_input,
         $_view,
         $_service;
 
-    public function __construct(Input $input, View $view, ArticleService $service)
+    public function __construct(View $view, ArticleService $service)
     {
-        $this->_input   = $input;
         $this->_view    = $view;
         $this->_service = $service;
     }
 
-    public function get()
+    /**
+     * View articles
+     *
+     * @param string $article
+     * @return string
+     */
+    public function get($article=null)
     {
-        return $this->_view->make('pages/index', array(
-            'articles' => $this->_service->findAll()
-        ));
+        return $article ?
+            $this->_view->make(
+                'pages/article/view', [
+                    'article' => ($article = $this->_service->getArticle($article)),
+                    'title' => $article->getTitle()
+                ]) :
+            $this->_view->make('pages/article/list', ['articles' => $this->_service->getArticles()]);
     }
 }

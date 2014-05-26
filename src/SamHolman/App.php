@@ -9,12 +9,12 @@ class App
         /**
          * @var array
          */
-        $_routes = array(),
+        $_routes = [],
 
         /**
          * @var array
          */
-        $_iocBindings = array();
+        $_iocBindings = [];
 
     private
 
@@ -61,16 +61,29 @@ class App
     /**
      * Routes to the given controller
      *
-     * @param string $route
+     * @param string $path
+     * @return string
      * @throws Exceptions\PageNotFoundException
      */
-    private function route($route)
+    private function route($path)
     {
-        $controller = 'SamHolman\Controllers\\' . (isset(self::$_routes[$route]) ? self::$_routes[$route] : null);
+        $matches = [];
+
+        if (!$route = isset(self::$_routes[$path]) ? self::$_routes[$path] : null) {
+            foreach (self::$_routes as $key => $destination) {
+                if (substr($key, 0, 6) == 'regex:' && preg_match(substr($key, 6), $path, $matches) !== false) {
+                    $route = $destination;
+                    array_shift($matches);
+                    break;
+                }
+            }
+        }
+
+        $controller = $route ? 'SamHolman\Controllers\\' . $route : null;
 
         if (class_exists($controller)) {
             $method = isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'get';
-            return App::make($controller)->$method();
+            return call_user_func_array([App::make($controller), $method], $matches);
         }
         else {
             throw new PageNotFoundException();
@@ -97,7 +110,7 @@ class App
      * @param array $params
      * @return object
      */
-    public static function make($class, array $params=array())
+    public static function make($class, array $params=[])
     {
         try {
             $reflectionMethod = new \ReflectionMethod($class, '__construct');

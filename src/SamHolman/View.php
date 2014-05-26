@@ -5,12 +5,12 @@ use \Michelf\MarkdownExtra;
 class View
 {
     private
-        $_vars = array();
+        $_vars = [];
 
     /**
      * @param string $template
      * @param array $vars
-     * @return void
+     * @return string
      */
     public function make($template, array $vars=null)
     {

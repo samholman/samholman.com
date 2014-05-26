@@ -6,7 +6,8 @@ use \SamHolman\App,
 /**
  * Register routes
  */
-App::register('/', 'Index');
+App::register('/about', 'About');
+App::register('regex:/^\/([a-z0-9_\-]*)$/i', 'Index');
 
 /**
  * Interface -> Concrete class bindings for automatic IoC resolution
@@ -14,17 +15,14 @@ App::register('/', 'Index');
 App::bind(
     'SamHolman\Article\Repository',
     function () {
-        return App::make(
-            '\SamHolman\Article\FileRepository',
-            array(new \DirectoryIterator(Config::get('content_dir')))
-        );
+        return App::make('\SamHolman\Article\FileRepository', [new \DirectoryIterator(Config::get('content_dir'))]);
     }
 );
 
 /**
  * General settings
  */
-return array(
+return [
     'view_dir'    => realpath(__DIR__ . '/../src/SamHolman/Views'),
     'content_dir' => realpath(__DIR__ . '/../content'),
-);
+];

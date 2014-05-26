@@ -12,12 +12,23 @@ class Service
     }
 
     /**
-     * Return all existing articles
+     * Returns all articles
      *
-     * @return mixed
+     * @return \Generator
      */
-    public function findAll()
+    public function getArticles()
     {
         return $this->_repo->findAll();
+    }
+
+    /**
+     * Returns an article object
+     *
+     * @param string $slug
+     * @return object
+     */
+    public function getArticle($slug)
+    {
+        return $this->_repo->find($slug);
     }
 }
