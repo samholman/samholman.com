@@ -23,7 +23,7 @@ class FileRepository implements Repository
         $files = new \ArrayObject();
 
         foreach ($this->_directory as $file) {
-            if (!$file->isDot() && $file->isReadable() && substr($file->getFilename(), 0, 1) != '_') {
+            if ($this->isValidArticleFile($file)) {
                 $files->offsetSet($file->getFilename(), $file->getFileInfo());
             }
         }
@@ -55,5 +55,17 @@ class FileRepository implements Repository
         if (file_exists($path)) {
             return App::make('\SamHolman\Article\Entity', [$slug, file_get_contents($path)]);
         }
+    }
+
+    /**
+     * Returns whether or not the given file is a valid article file for listing
+     *
+     * @param \DirectoryIterator $file
+     * @return bool
+     */
+    private function isValidArticleFile(\DirectoryIterator $file)
+    {
+        return !$file->isDot() && $file->isReadable() &&
+            $file->getExtension() == 'md' && substr($file->getFilename(), 0, 1) != '_';
     }
 }
