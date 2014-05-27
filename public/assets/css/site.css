@@ -59,6 +59,16 @@ header div.me a img {
     margin-right: 8px;
 }
 
+header div.me span.suffix {
+    display: none;
+}
+
+@media all and (min-width: 520px) {
+    header div.me span.suffix {
+        display: inline;
+    }
+}
+
 header nav {
     float: right;
     font-size: 0.9em;
@@ -86,7 +96,7 @@ header nav ul li a:hover {
 
 div.content {
     padding: 0 20px;
-    min-width: 520px;
+    min-width: 340px;
     max-width: 980px;
     margin: 0 auto;
     box-sizing: border-box;
