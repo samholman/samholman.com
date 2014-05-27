@@ -6,15 +6,16 @@ class IndexText extends PHPUnit_Framework_TestCase
 {
     public function testGet()
     {
-        $view = App::make('SamHolman\View');
+        $response = Mockery::mock('SamHolman\Response');
+        $view     = App::make('SamHolman\View');
 
-        $repo = Mockery::mock('SamHolman\Article\Service');
-        $repo->shouldReceive('getArticles')->andReturn(
+        $service = Mockery::mock('SamHolman\Article\Service');
+        $service->shouldReceive('getArticles')->andReturn(
             [App::make('SamHolman\Article\Entity', array('Title', 'Content'))]
         );
 
-        $controller = App::make('SamHolman\Controllers\Index', [$view, $repo]);
-        $output = $controller->get();
+        $controller = App::make('SamHolman\Controllers\Index', [$response, $view, $service]);
+        $output     = $controller->get();
 
         $this->assertNotEmpty($output);
         $this->assertInternalType('array', $view->articles);

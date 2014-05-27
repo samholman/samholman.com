@@ -1,6 +1,7 @@
 <?php namespace SamHolman;
 
-use \Michelf\MarkdownExtra;
+use \SamHolman\Exceptions\TemplateNotFoundException,
+    \Michelf\MarkdownExtra;
 
 class View
 {
@@ -11,6 +12,7 @@ class View
      * @param string $template
      * @param array $vars
      * @return string
+     * @throws TemplateNotFoundException
      */
     public function make($template, array $vars=null)
     {
@@ -20,11 +22,16 @@ class View
             }
         }
 
+        $templatePath = Config::get('view_dir') . DIRECTORY_SEPARATOR . $template . '.phtml';
+
+        if (!file_exists($templatePath)) {
+            throw new TemplateNotFoundException('Template "' . $template . '" not found.');
+        }
+
         ob_start();
-        include Config::get('view_dir') . DIRECTORY_SEPARATOR . $template . '.phtml';
+        include $templatePath;
         return ob_get_clean();
     }
-
 
     /**
      * @param string $var
