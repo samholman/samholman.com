@@ -9,14 +9,21 @@
          processIsolation="false"
          stopOnFailure="true"
          syntaxCheck="false">
+
     <testsuites>
         <testsuite name="samholman.com tests">
-            <directory>./tests</directory>
-
-            <whitelist processUncoveredFilesFromWhitelist="true">
-                <directory suffix=".php">./tests</directory>
-            </whitelist>
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src</directory>
+        </whitelist>
+    </filter>
+
+    <logging>
+        <log type="coverage-text" target="php://stdout" showUncoveredFiles="true" />
+    </logging>
 </phpunit>
 
