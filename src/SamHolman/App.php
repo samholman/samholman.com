@@ -55,7 +55,7 @@ class App
      */
     public function render()
     {
-        echo $this->_output;
+        return $this->_output;
     }
 
     /**

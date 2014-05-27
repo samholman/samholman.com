@@ -13,6 +13,13 @@ App::register('regex:/^\/([a-z0-9_\-]*)$/i', 'Index');
  * Interface -> Concrete class bindings for automatic IoC resolution
  */
 App::bind(
+    'SamHolman\Response',
+    function() {
+        return App::make('\SamHolman\Http\Response');
+    }
+);
+
+App::bind(
     'SamHolman\Article\Repository',
     function () {
         if (!is_dir(Config::get('content_dir'))) {
