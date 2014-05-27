@@ -41,7 +41,7 @@ header {
 }
 
 header div.me {
-    display: inline-block;
+    float: left;
     font-weight: bold;
 }
 
@@ -95,7 +95,8 @@ article {
     padding: 20px;
 }
 
-article img {
+article img,
+article iframe {
     max-width: 100%;
     margin-bottom: 10px;
 }
@@ -126,3 +127,4 @@ footer {
     font-size: 0.8em;
     text-align: center;
 }
+
