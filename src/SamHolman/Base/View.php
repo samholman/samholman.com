@@ -58,7 +58,7 @@ class View
      * @param string $text
      * @return mixed
      */
-    private function markdown($text)
+    public function markdown($text)
     {
         return MarkdownExtra::defaultTransform($text);
     }
