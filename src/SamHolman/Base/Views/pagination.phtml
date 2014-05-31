@@ -1,0 +1,11 @@
+<?php if ($this->totalPages > 1): ?>
+    <ul class="pagination">
+        <?php if ($this->currentPage != 1 && $this->currentPage <= $this->totalPages): ?>
+            <li class="previous"><a href="?page=<?php echo $this->currentPage-1; ?>">&laquo; Previous page</a>
+        <?php endif; ?>
+
+        <?php if ($this->currentPage < $this->totalPages): ?>
+            <li class="next"><a href="?page=<?php echo $this->currentPage+1; ?>">Next page &raquo;</a>
+        <?php endif; ?>
+    </ul>
+<?php endif; ?>

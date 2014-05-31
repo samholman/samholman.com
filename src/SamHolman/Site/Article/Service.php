@@ -14,11 +14,13 @@ class Service
     /**
      * Returns all articles
      *
+     * @param int $start
+     * @param int $limit
      * @return \Generator
      */
-    public function getArticles()
+    public function getArticles($start, $limit)
     {
-        return $this->_repo->findAll();
+        return $this->_repo->findAll($start, $limit);
     }
 
     /**
@@ -30,5 +32,15 @@ class Service
     public function getArticle($slug)
     {
         return $this->_repo->find($slug);
+    }
+
+    /**
+     * Returns the total number of articles available
+     *
+     * @return int
+     */
+    public function getArticleCount()
+    {
+        return $this->_repo->count();
     }
 }
