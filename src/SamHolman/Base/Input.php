@@ -1,4 +1,4 @@
-<?php namespace SamHolman;
+<?php namespace SamHolman\Base;
 
 class Input
 {

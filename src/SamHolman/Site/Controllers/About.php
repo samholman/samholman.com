@@ -1,6 +1,6 @@
-<?php namespace SamHolman\Controllers;
+<?php namespace SamHolman\Site\Controllers;
 
-use \SamHolman\View;
+use \SamHolman\Base\View;
 
 class About extends BaseAbstract
 {

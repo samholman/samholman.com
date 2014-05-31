@@ -1,6 +1,6 @@
-<?php namespace SamHolman\Article;
+<?php namespace SamHolman\Site\Article;
 
-use SamHolman\Article\Repository as ArticleRepository;
+use SamHolman\Site\Article\Repository as ArticleRepository;
 
 class Service
 {

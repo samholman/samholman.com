@@ -1,6 +1,6 @@
-<?php namespace SamHolman;
+<?php namespace SamHolman\Base;
 
-use SamHolman\Exceptions\PageNotFoundException;
+use SamHolman\Base\Exceptions\PageNotFoundException;
 
 class App
 {
@@ -79,7 +79,7 @@ class App
             }
         }
 
-        $controller = $route ? 'SamHolman\Controllers\\' . $route : null;
+        $controller = $route ? 'SamHolman\Site\Controllers\\' . $route : null;
 
         if (class_exists($controller)) {
             $method = isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'get';

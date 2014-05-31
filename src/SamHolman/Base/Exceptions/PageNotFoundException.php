@@ -1,3 +1,3 @@
-<?php namespace SamHolman\Exceptions;
+<?php namespace SamHolman\Base\Exceptions;
 
 class PageNotFoundException extends \Exception {}

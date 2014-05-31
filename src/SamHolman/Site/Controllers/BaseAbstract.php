@@ -1,4 +1,4 @@
-<?php namespace SamHolman\Controllers;
+<?php namespace SamHolman\Site\Controllers;
 
 abstract class BaseAbstract
 {
