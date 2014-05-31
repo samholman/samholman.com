@@ -33,6 +33,7 @@ App::bind(
  * General settings
  */
 return [
-    'view_dir'    => realpath(__DIR__ . '/../src/SamHolman/Site/Views'),
-    'content_dir' => realpath(__DIR__ . '/../content'),
+    'view_dir'         => realpath(__DIR__ . '/../src/SamHolman/Site/Views'),
+    'content_dir'      => realpath(__DIR__ . '/../content'),
+    'pagination_limit' => 6,
 ];

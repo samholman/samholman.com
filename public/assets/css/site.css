@@ -160,6 +160,29 @@ article p {
     line-height: 1.4em;
 }
 
+ul.pagination {
+    list-style: none;
+    margin: 0 0 20px 0;
+    padding: 20px;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    background: #fff;
+    height: 16px;
+}
+
+ul.pagination .previous {
+    float: left;
+}
+
+ul.pagination .next {
+    float: right;
+}
+
+ul.pagination a {
+    text-decoration: none;
+    color: #333;
+}
+
 footer {
     font-size: 0.8em;
     text-align: center;

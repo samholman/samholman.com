@@ -18,17 +18,13 @@ class FileRepository implements Repository
     /**
      * Returns all articles in the system
      *
+     * @param int $start
+     * @param int $limit
      * @return \Generator
      */
-    public function findAll()
+    public function findAll($start=0, $limit=1)
     {
-        $files = new \ArrayObject();
-
-        foreach ($this->_directory as $file) {
-            if ($this->isValidArticleFile($file)) {
-                $files->offsetSet($file->getFilename(), $file->getFileInfo());
-            }
-        }
+        $files = $this->getFilesArrayObject();
 
         $files->uksort(
             function ($a, $b) {
@@ -36,15 +32,26 @@ class FileRepository implements Repository
             }
         );
 
-        foreach ($files->getIterator() as $file) {
-            yield App::make(
-                '\SamHolman\Site\Article\Entity',
-                array_merge(
-                    $this->_filenameParser->getDetailsFromFilename($file->getFilename()),
-                    [file_get_contents($file->getPathname())]
-                )
-            );
+        $iterator = $files->getIterator();
+
+        try {
+            $iterator->seek($start);
+
+            for ($i=0; $i<$limit; $i++) {
+                if ($file = $iterator->current()) {
+                    $iterator->next();
+
+                    yield App::make(
+                        '\SamHolman\Site\Article\Entity',
+                        array_merge(
+                            $this->_filenameParser->getDetailsFromFilename($file->getFilename()),
+                            [file_get_contents($file->getPathname())]
+                        )
+                    );
+                }
+            }
         }
+        catch (\OutOfBoundsException $e) {}
     }
 
     /**
@@ -66,6 +73,34 @@ class FileRepository implements Repository
                 )
             );
         }
+    }
+
+    /**
+     * Returns the total number of articles
+     *
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->getFilesArrayObject());
+    }
+
+    /**
+     * Returns an array object based on the loaded directory
+     *
+     * @return \ArrayObject
+     */
+    private function getFilesArrayObject()
+    {
+        $files = new \ArrayObject();
+
+        foreach ($this->_directory as $file) {
+            if ($this->isValidArticleFile($file)) {
+                $files->offsetSet($file->getFilename(), $file->getFileInfo());
+            }
+        }
+
+        return $files;
     }
 
     /**

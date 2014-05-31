@@ -11,10 +11,11 @@ class View
     /**
      * @param string $template
      * @param array $vars
+     * @param string $viewDir
      * @return string
      * @throws TemplateNotFoundException
      */
-    public function make($template, array $vars=null)
+    public function make($template, array $vars=null, $viewDir=null)
     {
         if ($vars) {
             foreach ($vars as $var => $val) {
@@ -22,7 +23,7 @@ class View
             }
         }
 
-        $templatePath = Config::get('view_dir') . DIRECTORY_SEPARATOR . $template . '.phtml';
+        $templatePath = ($viewDir ? $viewDir : Config::get('view_dir')) . DIRECTORY_SEPARATOR . $template . '.phtml';
 
         if (!file_exists($templatePath)) {
             throw new TemplateNotFoundException('Template "' . $template . '" not found.');

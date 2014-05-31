@@ -2,6 +2,7 @@
 
 interface Repository
 {
-    public function findAll();
+    public function findAll($start=0, $limit=1);
     public function find($slug);
+    public function count();
 }
