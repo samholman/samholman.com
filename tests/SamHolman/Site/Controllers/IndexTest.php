@@ -1,20 +1,20 @@
 <?php
 
-use SamHolman\App;
+use SamHolman\Base\App;
 
 class IndexText extends PHPUnit_Framework_TestCase
 {
     public function testGet()
     {
-        $response = Mockery::mock('SamHolman\Response');
-        $view     = App::make('SamHolman\View');
+        $response = Mockery::mock('SamHolman\Base\Response');
+        $view     = App::make('SamHolman\Base\View');
 
-        $service = Mockery::mock('SamHolman\Article\Service');
+        $service = Mockery::mock('SamHolman\Site\Article\Service');
         $service->shouldReceive('getArticles')->andReturn(
-            [App::make('SamHolman\Article\Entity', ['slug', new \DateTime(), 'Title', 'Content'])]
+            [App::make('SamHolman\Site\Article\Entity', ['slug', new \DateTime(), 'Title', 'Content'])]
         );
 
-        $controller = App::make('SamHolman\Controllers\Index', [$response, $view, $service]);
+        $controller = App::make('SamHolman\Site\Controllers\Index', [$response, $view, $service]);
         $output     = $controller->get();
 
         $this->assertNotEmpty($output);

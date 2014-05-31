@@ -1,6 +1,6 @@
-<?php namespace SamHolman;
+<?php use \SamHolman\Base\App;
 
 require_once '../vendor/autoload.php';
 
-echo App::make('\SamHolman\App')->run()->render();
+echo App::make('\SamHolman\Base\App')->run()->render();
 exit;

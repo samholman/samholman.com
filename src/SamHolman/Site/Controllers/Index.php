@@ -1,8 +1,8 @@
-<?php namespace SamHolman\Controllers;
+<?php namespace SamHolman\Site\Controllers;
 
-use \SamHolman\Response,
-    \SamHolman\View,
-    \SamHolman\Article\Service as ArticleService;
+use \SamHolman\Base\Response,
+    \SamHolman\Base\View,
+    \SamHolman\Site\Article\Service as ArticleService;
 
 class Index extends BaseAbstract
 {

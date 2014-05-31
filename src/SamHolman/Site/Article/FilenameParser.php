@@ -1,4 +1,4 @@
-<?php namespace SamHolman\Article;
+<?php namespace SamHolman\Site\Article;
 
 class FilenameParser
 {

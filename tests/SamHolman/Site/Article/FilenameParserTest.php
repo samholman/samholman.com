@@ -1,6 +1,6 @@
 <?php
 
-use SamHolman\Article\FilenameParser;
+use SamHolman\Site\Article\FilenameParser;
 
 class FilenameParserTest extends PHPUnit_Framework_TestCase
 {

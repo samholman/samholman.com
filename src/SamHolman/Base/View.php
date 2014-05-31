@@ -1,6 +1,6 @@
-<?php namespace SamHolman;
+<?php namespace SamHolman\Base;
 
-use \SamHolman\Exceptions\TemplateNotFoundException,
+use \SamHolman\Base\Exceptions\TemplateNotFoundException,
     \Michelf\MarkdownExtra;
 
 class View

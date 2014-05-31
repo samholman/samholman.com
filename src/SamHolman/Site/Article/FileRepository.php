@@ -1,7 +1,7 @@
-<?php namespace SamHolman\Article;
+<?php namespace SamHolman\Site\Article;
 
-use SamHolman\App,
-    SamHolman\Article\Entity as Article;
+use SamHolman\Base\App,
+    SamHolman\Site\Article\Entity as Article;
 
 class FileRepository implements Repository
 {
@@ -38,7 +38,7 @@ class FileRepository implements Repository
 
         foreach ($files->getIterator() as $file) {
             yield App::make(
-                '\SamHolman\Article\Entity',
+                '\SamHolman\Site\Article\Entity',
                 array_merge(
                     $this->_filenameParser->getDetailsFromFilename($file->getFilename()),
                     [file_get_contents($file->getPathname())]
@@ -59,7 +59,7 @@ class FileRepository implements Repository
 
         if (file_exists($path)) {
             return App::make(
-                '\SamHolman\Article\Entity',
+                '\SamHolman\Site\Article\Entity',
                 array_merge(
                     $this->_filenameParser->getDetailsFromFilename($slug),
                     [file_get_contents($path)]

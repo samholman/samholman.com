@@ -1,7 +1,7 @@
 <?php
 
-use \SamHolman\App,
-    \SamHolman\Config;
+use \SamHolman\Base\App,
+    \SamHolman\Base\Config;
 
 /**
  * Register routes
@@ -13,19 +13,19 @@ App::register('regex:/^\/([a-z0-9_\-]*)$/i', 'Index');
  * Interface -> Concrete class bindings for automatic IoC resolution
  */
 App::bind(
-    'SamHolman\Response',
+    'SamHolman\Base\Response',
     function() {
-        return App::make('\SamHolman\Http\Response');
+        return App::make('\SamHolman\Base\Http\Response');
     }
 );
 
 App::bind(
-    'SamHolman\Article\Repository',
+    'SamHolman\Site\Article\Repository',
     function () {
         if (!is_dir(Config::get('content_dir'))) {
             throw new \Exception("The content directory doesn't exist. Check your config.");
         }
-        return App::make('\SamHolman\Article\FileRepository', [new \DirectoryIterator(Config::get('content_dir'))]);
+        return App::make('\SamHolman\Site\Article\FileRepository', [new \DirectoryIterator(Config::get('content_dir'))]);
     }
 );
 
@@ -33,6 +33,6 @@ App::bind(
  * General settings
  */
 return [
-    'view_dir'    => realpath(__DIR__ . '/../src/SamHolman/Views'),
+    'view_dir'    => realpath(__DIR__ . '/../src/SamHolman/Site/Views'),
     'content_dir' => realpath(__DIR__ . '/../content'),
 ];

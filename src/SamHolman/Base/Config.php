@@ -1,4 +1,4 @@
-<?php namespace SamHolman;
+<?php namespace SamHolman\Base;
 
 class Config
 {
@@ -44,7 +44,7 @@ class Config
     {
         if (!self::$_instance) {
             self::$_instance = new Config();
-            self::$_instance->_settings = include_once __DIR__ . '/../../config/settings.php';
+            self::$_instance->_settings = include_once __DIR__ . '/../../../config/settings.php';
         }
     }
 }

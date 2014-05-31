@@ -1,6 +1,6 @@
 <?php
 
-use SamHolman\Article\Entity as Article;
+use SamHolman\Site\Article\Entity as Article;
 
 class EntityTest extends PHPUnit_Framework_TestCase
 {
