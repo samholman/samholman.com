@@ -1,17 +1,20 @@
 <?php namespace SamHolman\Site\Article;
 
 use SamHolman\Base\App,
+    SamHolman\Base\File\Reader as FileReader,
     SamHolman\Site\Article\Entity as Article;
 
 class FileRepository implements Repository
 {
     private
         $_directory,
+        $_fileReader,
         $_filenameParser;
 
-    public function __construct(\DirectoryIterator $directory, FilenameParser $filenameParser)
+    public function __construct(\DirectoryIterator $directory, FileReader $fileReader, FilenameParser $filenameParser)
     {
         $this->_directory      = $directory;
+        $this->_fileReader     = $fileReader;
         $this->_filenameParser = $filenameParser;
     }
 
@@ -45,7 +48,7 @@ class FileRepository implements Repository
                         '\SamHolman\Site\Article\Entity',
                         array_merge(
                             $this->_filenameParser->getDetailsFromFilename($file->getFilename()),
-                            [file_get_contents($file->getPathname())]
+                            [$this->_fileReader->read($file->getPathname())]
                         )
                     );
                 }
@@ -64,12 +67,12 @@ class FileRepository implements Repository
     {
         $path = $this->_directory->getPath() . '/' .  $slug . '.md';
 
-        if (file_exists($path)) {
+        if ($this->_fileReader->exists($path)) {
             return App::make(
                 '\SamHolman\Site\Article\Entity',
                 array_merge(
                     $this->_filenameParser->getDetailsFromFilename($slug),
-                    [file_get_contents($path)]
+                    [$this->_fileReader->read($path)]
                 )
             );
         }

@@ -8,6 +8,7 @@ class FilenameParserTest extends PHPUnit_Framework_TestCase
     {
         return [
             ['310514-test-filename.md', '310514-test-filename', 310514, 'Test Filename'],
+            ['_010614-test-filename-2.md', '_010614-test-filename-2', '010614', 'Test Filename 2'],
         ];
     }
 

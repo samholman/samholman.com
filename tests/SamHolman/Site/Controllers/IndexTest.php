@@ -2,7 +2,7 @@
 
 use SamHolman\Base\App;
 
-class IndexText extends PHPUnit_Framework_TestCase
+class IndexTest extends PHPUnit_Framework_TestCase
 {
     public function testGet()
     {
@@ -22,9 +22,8 @@ class IndexText extends PHPUnit_Framework_TestCase
         $service->shouldReceive('getArticleCount')->andReturn(1);
 
         $controller = App::make('SamHolman\Site\Controllers\Index', [$input, $response, $view, $pagination, $service]);
-        $output     = $controller->get();
 
-        $this->assertNotEmpty($output);
+        $this->assertNotEmpty($controller->get());
         $this->assertInternalType('array', $view->articles);
         $this->assertCount(1, $view->articles);
         $this->assertEquals('Title', $view->articles[0]->getTitle());

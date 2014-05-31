@@ -18,7 +18,7 @@ class Service
      * @param int $limit
      * @return \Generator
      */
-    public function getArticles($start, $limit)
+    public function getArticles($start=0, $limit=1)
     {
         return $this->_repo->findAll($start, $limit);
     }

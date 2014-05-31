@@ -14,6 +14,9 @@ class FilenameParser
         $date = new \DateTime();
 
         $parts = explode('-', $slug);
+        if (substr($parts[0], 0, 1) == '_') {
+            $parts[0] = substr($parts[0], 1);
+        }
 
         if (is_numeric($parts[0])) {
             $date = \DateTime::createFromFormat('dmy', array_shift($parts));
