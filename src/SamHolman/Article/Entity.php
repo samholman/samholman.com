@@ -4,11 +4,15 @@ class Entity
 {
     private
         $_slug,
+        $_date,
+        $_title,
         $_content;
 
-    public function __construct($slug, $content)
+    public function __construct($slug, \DateTime $date, $title, $content)
     {
         $this->_slug    = $slug;
+        $this->_date    = $date;
+        $this->_title   = $title;
         $this->_content = $content;
     }
 
@@ -29,8 +33,7 @@ class Entity
      */
     public function getDate()
     {
-        $date = substr($this->getSlug(), 0, strpos($this->getSlug(), '-'));
-        return is_numeric($date) ? \DateTime::createFromFormat('dmy', $date) : new \DateTime();
+        return $this->_date;
     }
 
     /**
@@ -40,13 +43,7 @@ class Entity
      */
     public function getTitle()
     {
-        $parts = explode('-', $this->getSlug());
-
-        if (is_numeric($parts[0])) {
-            unset($parts[0]);
-        }
-
-        return ucwords(implode(' ', $parts));
+        return $this->_title;
     }
 
     /**

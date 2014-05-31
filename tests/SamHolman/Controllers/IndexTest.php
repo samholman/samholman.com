@@ -11,7 +11,7 @@ class IndexText extends PHPUnit_Framework_TestCase
 
         $service = Mockery::mock('SamHolman\Article\Service');
         $service->shouldReceive('getArticles')->andReturn(
-            [App::make('SamHolman\Article\Entity', array('Title', 'Content'))]
+            [App::make('SamHolman\Article\Entity', ['slug', new \DateTime(), 'Title', 'Content'])]
         );
 
         $controller = App::make('SamHolman\Controllers\Index', [$response, $view, $service]);

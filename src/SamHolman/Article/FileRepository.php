@@ -6,11 +6,13 @@ use SamHolman\App,
 class FileRepository implements Repository
 {
     private
-        $_directory;
+        $_directory,
+        $_filenameParser;
 
-    public function __construct(\DirectoryIterator $directory)
+    public function __construct(\DirectoryIterator $directory, FilenameParser $filenameParser)
     {
-        $this->_directory = $directory;
+        $this->_directory      = $directory;
+        $this->_filenameParser = $filenameParser;
     }
 
     /**
@@ -37,7 +39,10 @@ class FileRepository implements Repository
         foreach ($files->getIterator() as $file) {
             yield App::make(
                 '\SamHolman\Article\Entity',
-                [basename($file->getFilename(), '.md'), file_get_contents($file->getPathname())]
+                array_merge(
+                    $this->_filenameParser->getDetailsFromFilename($file->getFilename()),
+                    [file_get_contents($file->getPathname())]
+                )
             );
         }
     }
@@ -53,7 +58,13 @@ class FileRepository implements Repository
         $path = $this->_directory->getPath() . '/' .  $slug . '.md';
 
         if (file_exists($path)) {
-            return App::make('\SamHolman\Article\Entity', [$slug, file_get_contents($path)]);
+            return App::make(
+                '\SamHolman\Article\Entity',
+                array_merge(
+                    $this->_filenameParser->getDetailsFromFilename($slug),
+                    [file_get_contents($path)]
+                )
+            );
         }
     }
 
