@@ -39,21 +39,25 @@ class FileRepository implements Repository
             );
 
             $iterator = $files->getIterator();
-            $iterator->seek($start);
 
-            for ($i=0; $i<$limit; $i++) {
-                if ($file = $iterator->current()) {
-                    $iterator->next();
+            try {
+                $iterator->seek($start);
 
-                    yield App::make(
-                        '\SamHolman\Site\Article\Entity',
-                        array_merge(
-                            $this->_filenameParser->getDetailsFromFilename($file->getFilename()),
-                            [$this->_fileReader->read($file->getPathname())]
-                        )
-                    );
+                for ($i=0; $i<$limit; $i++) {
+                    if ($file = $iterator->current()) {
+                        $iterator->next();
+
+                        yield App::make(
+                            '\SamHolman\Site\Article\Entity',
+                            array_merge(
+                                $this->_filenameParser->getDetailsFromFilename($file->getFilename()),
+                                [$this->_fileReader->read($file->getPathname())]
+                            )
+                        );
+                    }
                 }
             }
+            catch (\OutOfBoundsException $e) {}
         }
     }
 
