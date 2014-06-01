@@ -160,6 +160,18 @@ article p {
     line-height: 1.4em;
 }
 
+article a.readMore {
+    display: block;
+    padding: 10px;
+    margin: 0 -10px;
+    font-size: 0.9em;
+    text-decoration: none;
+    color: #007c20;
+    background: #eee;
+    font-weight: bold;
+    font-style: italic;
+}
+
 ul.pagination {
     list-style: none;
     margin: 0 0 20px 0;
