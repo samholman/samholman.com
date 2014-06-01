@@ -10,6 +10,8 @@ class Response implements \SamHolman\Base\Response
      */
     public function header($header)
     {
-        header($header);
+        if (PHP_SAPI != 'cli') {
+            header($header);
+        }
     }
 }
