@@ -6,9 +6,10 @@ class Response implements \SamHolman\Base\Response
      * Send a HTTP header
      *
      * @param string $header
+     * @return void
      */
     public function header($header)
     {
-        header('HTTP/1.0 404 Not Found');
+        header($header);
     }
 }
