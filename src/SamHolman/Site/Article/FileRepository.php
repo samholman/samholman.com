@@ -29,15 +29,14 @@ class FileRepository implements Repository
     {
         $files = $this->getFilesArrayObject();
 
-        $files->uksort(
-            function ($a, $b) {
-                return strcmp($b, $a);
-            }
-        );
+        if ($start <= count($files)) {
+            $files->uksort(
+                function ($a, $b) {
+                    return strcmp($b, $a);
+                }
+            );
 
-        $iterator = $files->getIterator();
-
-        try {
+            $iterator = $files->getIterator();
             $iterator->seek($start);
 
             for ($i=0; $i<$limit; $i++) {
@@ -54,7 +53,6 @@ class FileRepository implements Repository
                 }
             }
         }
-        catch (\OutOfBoundsException $e) {}
     }
 
     /**
