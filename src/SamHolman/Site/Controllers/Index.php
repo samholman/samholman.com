@@ -44,8 +44,14 @@ class Index extends BaseAbstract
         return $article ?
             $this->_view->make(
                 'pages/article/view', [
-                    'article' => $article,
-                    'title'   => $article->getTitle()
+                    'article'     => $article,
+                    'title'       => $article->getTitle(),
+                    'description' =>
+                        preg_match('/^.{1,155}\b/s', $article->getContent(), $matches) ?
+                            trim(
+                                preg_replace(['/[\r\n]+/', '/[^\da-z:,\'\/\(\)\. ]/i'], [' ', ''], $matches[0])
+                            ) . '...' :
+                            null,
                 ]
             ) :
             $this->_view->make(
