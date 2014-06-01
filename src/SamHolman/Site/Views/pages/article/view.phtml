@@ -6,7 +6,7 @@
         <time><?php echo $this->article->getDate()->format('D jS M Y') ?></time>
         <?php echo $this->markdown($this->article->getContent()) ?>
 
-        <a href="/" onclick="window.history.go(-1); return false;" class="readMore">&laquo; Back</a>
+        <a href="/" class="readMore">&laquo; Back</a>
     </article>
 <?php endif ?>
 
