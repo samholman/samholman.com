@@ -32,7 +32,9 @@ class FileRepository implements Repository
         if ($start <= count($files)) {
             $files->uksort(
                 function ($a, $b) {
-                    return strcmp($b, $a);
+                    list($slug, $aDate) = $this->_filenameParser->getDetailsFromFilename($a);
+                    list($slug, $bDate) = $this->_filenameParser->getDetailsFromFilename($b);
+                    return $aDate->getTimestamp() < $bDate->getTimestamp();
                 }
             );
 
