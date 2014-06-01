@@ -2,11 +2,24 @@
 
 <?php foreach ($this->articles as $article): ?>
     <article>
-        <h2 class="title"><a href="<?php echo $article->getSlug() ?>"><?php echo $article->getTitle() ?></a></h2>
-        <time><?php echo $article->getDate()->format('D jS M Y') ?></time>
-        <?php echo $this->markdown($article->getContent()) ?>
+        <h2 class="title">
+            <a href="<?php echo $article->getSlug(); ?>"><?php echo $article->getTitle(); ?></a>
+        </h2>
+        <time><?php echo $article->getDate()->format('D jS M Y'); ?></time>
+        <?php
+            $paragraphsToShow = 3;
+
+            $content    = $article->getContent();
+            $paragraphs = explode("\n\n", $content);
+            $content    = implode("\n\n", array_slice($paragraphs, 0, $paragraphsToShow));
+            echo $this->markdown($content);
+
+            if (count($paragraphs) > $paragraphsToShow): ?>
+                <a href="<?php echo $article->getSlug(); ?>" class="readMore">Continue reading &raquo;</a>
+            <?php endif;
+        ?>
     </article>
-<?php endforeach ?>
+<?php endforeach; ?>
 
 <?php echo $this->pagination; ?>
 
