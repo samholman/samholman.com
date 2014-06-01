@@ -38,7 +38,7 @@ class Index extends BaseAbstract
             return $this->_view->make('errors/404');
         }
 
-        $page  = $this->_input->get('page') ?: 1;
+        $page  = (int)$this->_input->get('page') ?: 1;
         $limit = Config::get('pagination_limit');
 
         return $article ?
