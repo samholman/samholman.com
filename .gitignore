@@ -4,6 +4,7 @@ composer.phar
 
 /Vagrantfile
 /.vagrant
+/release_to_live.sh
 
 /content
 /public/files
