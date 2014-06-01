@@ -42,10 +42,21 @@ class FileRepositoryTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    public function testFind()
+    public function articleProvider()
+    {
+        return [
+            ['310514-test-article.md', '310514-test-article', 'Test Article'],
+            ['_010614-test-article-2.md', '_010614-_test-article-2', 'Test Article 2'],
+        ];
+    }
+
+    /**
+     * @dataProvider articleProvider
+     */
+    public function testFind($filename, $slug, $title)
     {
         $directoryIterator = Mockery::mock('DirectoryIterator');
-        $directoryIterator->shouldReceive('getPath')->andReturn('/tmp/test-article.md');
+        $directoryIterator->shouldReceive('getPath')->andReturn('/tmp/' . $filename);
 
         $fileReader = Mockery::mock('\SamHolman\Base\File\Reader');
         $fileReader->shouldReceive('exists')->andReturn(true);
@@ -53,12 +64,12 @@ class FileRepositoryTest extends PHPUnit_Framework_TestCase
 
         $filenameParser = Mockery::mock('\SamHolman\Site\Article\FilenameParser');
         $filenameParser->shouldReceive('getDetailsFromFilename')
-            ->andReturn(['310514-test-article', new DateTime(), 'Test Article']);
+            ->andReturn([$slug, new DateTime(), $title]);
 
         $repo = new FileRepository($directoryIterator, $fileReader, $filenameParser);
 
-        $article = $repo->find('310514-test-article');
-        $this->assertEquals('Test Article', $article->getTitle());
+        $article = $repo->find($slug);
+        $this->assertEquals($title, $article->getTitle());
     }
 
     public function testCount()
