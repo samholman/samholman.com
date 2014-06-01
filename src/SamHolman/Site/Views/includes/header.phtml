@@ -5,7 +5,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="target-densitydpi=device-dpi,width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
-    <meta name="description" content="Sam Holman - Senior Software Engineer at BSkyB. Based in Leeds, UK. Agile, TDD, DDD, CI, Gamer, Liberal, organiser of @leedsphp." />
+    <meta name="description" content="<?php
+        echo isset($this->article) && preg_match('/^.{1,150}\b/s', $this->article->getContent(), $matches) ?
+            trim(preg_replace(['/[\r\n]+/', '/[^\da-z\/:\(\)\. ]/i'], [' ', ''], $matches[0])) . '...' :
+            'Sam Holman - Senior Software Engineer at BSkyB. ' .
+            'Based in Leeds, UK. Agile, TDD, DDD, CI, Gamer, Liberal, organiser of @leedsphp.' ?>" />
+
     <title><?php echo isset($this->title) ? $this->title : 'Home' ?> | Sam Holman</title>
     <link rel='shortcut icon' href='/assets/img/yoshi.png' type='image/png' />
 
