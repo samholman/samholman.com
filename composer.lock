@@ -65,12 +65,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/padraic/mockery.git",
-                "reference": "0220d46044466a79b008dffbd959498b19c8949c"
+                "reference": "76212f1e56646f972618fa359bee68b9c2feb57a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/mockery/zipball/0220d46044466a79b008dffbd959498b19c8949c",
-                "reference": "0220d46044466a79b008dffbd959498b19c8949c",
+                "url": "https://api.github.com/repos/padraic/mockery/zipball/76212f1e56646f972618fa359bee68b9c2feb57a",
+                "reference": "76212f1e56646f972618fa359bee68b9c2feb57a",
                 "shasum": ""
             },
             "require": {
@@ -123,7 +123,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2014-05-30 21:42:55"
+            "time": "2014-06-17 10:46:23"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -493,17 +493,17 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.4.5",
+            "version": "v2.5.0",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "fd22bb88c3a6f73c898b39bec185a9e211b06265"
+                "reference": "b4b09c68ec2f2727574544ef0173684281a5033c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/fd22bb88c3a6f73c898b39bec185a9e211b06265",
-                "reference": "fd22bb88c3a6f73c898b39bec185a9e211b06265",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/b4b09c68ec2f2727574544ef0173684281a5033c",
+                "reference": "b4b09c68ec2f2727574544ef0173684281a5033c",
                 "shasum": ""
             },
             "require": {
@@ -512,7 +512,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4-dev"
+                    "dev-master": "2.5-dev"
                 }
             },
             "autoload": {
@@ -538,7 +538,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2014-05-12 09:27:48"
+            "time": "2014-05-16 14:25:18"
         }
     ],
     "aliases": [
