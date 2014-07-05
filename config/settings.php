@@ -7,7 +7,7 @@ use \SamHolman\Base\App,
  * Register routes
  */
 App::register('/about', 'About');
-App::register('regex:/^\/([a-z0-9_\-]*)$/i', 'Index');
+App::register('regex:/^\/([a-z0-9_\-\.]*)$/i', 'Index');
 
 /**
  * Interface -> Concrete class bindings for automatic IoC resolution
