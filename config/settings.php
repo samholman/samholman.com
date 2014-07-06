@@ -1,39 +1,41 @@
 <?php
 
-use \SamHolman\Base\App,
-    \SamHolman\Base\Config;
-
-/**
- * Register routes
- */
-App::register('/about', 'About');
-App::register('regex:/^\/([a-z0-9_\-\.]*)$/i', 'Index');
-
-/**
- * Interface -> Concrete class bindings for automatic IoC resolution
- */
-App::bind(
-    'SamHolman\Base\Response',
-    function() {
-        return App::make('\SamHolman\Base\Http\Response');
-    }
-);
-
-App::bind(
-    'SamHolman\Site\Article\Repository',
-    function () {
-        if (!is_dir(Config::get('content_dir'))) {
-            throw new \Exception("The content directory doesn't exist. Check your config.");
-        }
-        return App::make('\SamHolman\Site\Article\FileRepository', [new \DirectoryIterator(Config::get('content_dir'))]);
-    }
-);
+use SamHolman\Base\App,
+    SamHolman\Base\IoC;
 
 /**
  * General settings
  */
-return [
+$settings = [
     'view_dir'         => realpath(__DIR__ . '/../src/SamHolman/Site/Views'),
     'content_dir'      => realpath(__DIR__ . '/../content'),
     'pagination_limit' => 6,
 ];
+
+/**
+ * Register routes
+ */
+App::register('/about', 'SamHolman\Site\Controllers\About');
+App::register('regex:/^\/([a-z0-9_\-\.]*)$/i', 'SamHolman\Site\Controllers\Index');
+
+/**
+ * Interface -> Concrete class bindings for automatic IoC resolution
+ */
+IoC::bind(
+    'SamHolman\Base\Response',
+    function() {
+        return IoC::make('\SamHolman\Base\Http\Response');
+    }
+);
+
+IoC::bind(
+    'SamHolman\Site\Article\Repository',
+    function () use ($settings) {
+        if (!is_dir($settings['content_dir'])) {
+            throw new \Exception("The content directory doesn't exist. Check your config.");
+        }
+        return IoC::make('\SamHolman\Site\Article\FileRepository', [new \DirectoryIterator($settings['content_dir'])]);
+    }
+);
+
+return $settings;

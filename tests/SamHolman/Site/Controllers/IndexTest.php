@@ -1,6 +1,6 @@
 <?php
 
-use SamHolman\Base\App;
+use SamHolman\Base\IoC;
 
 class IndexTest extends PHPUnit_Framework_TestCase
 {
@@ -13,19 +13,66 @@ class IndexTest extends PHPUnit_Framework_TestCase
         $pagination = Mockery::mock('SamHolman\Base\Pagination');
         $pagination->shouldReceive('get');
 
-        $view = App::make('SamHolman\Base\View');
+        $view = IoC::make('SamHolman\Base\View');
 
         $service = Mockery::mock('SamHolman\Site\Article\Service');
         $service->shouldReceive('getArticles')->andReturn(
-            [App::make('SamHolman\Site\Article\Entity', ['slug', new \DateTime(), 'Title', 'Content'])]
+            [IoC::make('SamHolman\Site\Article\Entity', ['slug', new \DateTime(), 'Title', 'Content'])]
         );
         $service->shouldReceive('getArticleCount')->andReturn(1);
 
-        $controller = App::make('SamHolman\Site\Controllers\Index', [$input, $response, $view, $pagination, $service]);
+        $controller = IoC::make('SamHolman\Site\Controllers\Index', [$input, $response, $view, $pagination, $service]);
 
-        $this->assertNotEmpty($controller->get());
+        try {
+            $this->assertNotEmpty($controller->get());
+        }
+        catch(SamHolman\Base\Exceptions\TemplateNotFoundException $e) {}
+
         $this->assertInternalType('array', $view->articles);
         $this->assertCount(1, $view->articles);
         $this->assertEquals('Title', $view->articles[0]->getTitle());
+    }
+
+    public function testGetWithArticle()
+    {
+        $input = Mockery::mock('SamHolman\Base\Input');
+        $input->shouldReceive('get')->with('page')->andReturn(0);
+
+        $response = Mockery::mock('SamHolman\Base\Response');
+        $response->shouldReceive('header');
+
+        $pagination = Mockery::mock('SamHolman\Base\Pagination');
+        $pagination->shouldReceive('get');
+
+        $view = IoC::make('SamHolman\Base\View');
+
+        $service = Mockery::mock('SamHolman\Site\Article\Service');
+        $service->shouldReceive('getArticle')->with('article')->andReturn(
+            IoC::make('SamHolman\Site\Article\Entity', ['slug', new \DateTime(), 'Title', 'Content'])
+        );
+        $service->shouldReceive('getArticle')->with('another-article')->andReturn(false);
+
+        $controller = IoC::make('SamHolman\Site\Controllers\Index', [$input, $response, $view, $pagination, $service]);
+
+        /**
+         * First try a 404
+         */
+        try {
+            $this->assertNotEmpty($controller->get('another-article'));
+        }
+        catch(SamHolman\Base\Exceptions\TemplateNotFoundException $e) {}
+
+        $this->assertEmpty($view->article);
+
+        /**
+         * But this one should exist
+         */
+        try {
+            $this->assertNotEmpty($controller->get('article'));
+        }
+        catch(SamHolman\Base\Exceptions\TemplateNotFoundException $e) {}
+
+        $this->assertInstanceOf('SamHolman\Site\Article\Entity', $view->article);
+        $this->assertEquals('Title', $view->article->getTitle());
     }
 }

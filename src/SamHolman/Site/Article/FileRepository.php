@@ -1,6 +1,6 @@
 <?php namespace SamHolman\Site\Article;
 
-use SamHolman\Base\App,
+use SamHolman\Base\IoC,
     SamHolman\Base\File\Reader as FileReader,
     SamHolman\Site\Article\Entity as Article;
 
@@ -47,7 +47,7 @@ class FileRepository implements Repository
                     if ($file = $iterator->current()) {
                         $iterator->next();
 
-                        yield App::make(
+                        yield IoC::make(
                             '\SamHolman\Site\Article\Entity',
                             array_merge(
                                 $this->_filenameParser->getDetailsFromFilename($file->getFilename()),
@@ -72,7 +72,7 @@ class FileRepository implements Repository
         $path = $this->_directory->getPath() . '/' .  $slug . '.md';
 
         if ($this->_fileReader->exists($path)) {
-            return App::make(
+            return IoC::make(
                 '\SamHolman\Site\Article\Entity',
                 array_merge(
                     $this->_filenameParser->getDetailsFromFilename($slug),

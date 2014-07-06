@@ -1,13 +1,13 @@
 <?php
 
-use SamHolman\Base\App,
+use SamHolman\Base\IoC,
     SamHolman\Base\Pagination;
 
 class PaginationTest extends PHPUnit_Framework_TestCase
 {
     public function testGet()
     {
-        $view       = App::make('SamHolman\Base\View');
+        $view       = IoC::make('SamHolman\Base\View');
         $pagination = new Pagination($view);
         $output     = $pagination->get(1, 2);
 

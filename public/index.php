@@ -1,6 +1,10 @@
-<?php use \SamHolman\Base\App;
+<?php
+
+use SamHolman\Base\IoC,
+    SamHolman\Base\Config;
 
 require_once '../vendor/autoload.php';
 
-echo App::make('\SamHolman\Base\App')->run()->render();
+Config::init(__DIR__ . '/../config/settings.php');
+echo IoC::make('\SamHolman\Base\App')->run()->render();
 exit;

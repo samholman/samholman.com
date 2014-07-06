@@ -7,14 +7,11 @@ class App
     private static
 
         /**
+         * Holds URI routes
+         *
          * @var array
          */
-        $_routes = [],
-
-        /**
-         * @var array
-         */
-        $_iocBindings = [];
+        $_routes = [];
 
     private
 
@@ -34,7 +31,6 @@ class App
     public function __construct(Input $input)
     {
         $this->_input = $input;
-        Config::init();
     }
 
     /**
@@ -79,15 +75,12 @@ class App
             }
         }
 
-        $controller = $route ? 'SamHolman\Site\Controllers\\' . $route : null;
-
-        if (class_exists($controller)) {
+        if (class_exists($route)) {
             $method = isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'get';
-            return call_user_func_array([App::make($controller), $method], $matches);
+            return call_user_func_array([IoC::make($route), $method], $matches);
         }
-        else {
-            throw new PageNotFoundException();
-        }
+
+        throw new PageNotFoundException();
     }
 
     /**
@@ -100,53 +93,5 @@ class App
     public static function register($path, $controller)
     {
         self::$_routes[$path] = $controller;
-    }
-
-    /**
-     * Lightweight IoC resolver.
-     * Returns an instance of the given class with missing dependencies (hopefully) injected automatically.
-     *
-     * @param string $class
-     * @param array $params
-     * @return object
-     */
-    public static function make($class, array $params=[])
-    {
-        try {
-            $reflectionMethod = new \ReflectionMethod($class, '__construct');
-            $requiredParams = $reflectionMethod->getParameters();
-
-            if (count($requiredParams) != count($params)) {
-                for ($i=count($params); $i<count($requiredParams); $i++) {
-                    $params[] = App::make($requiredParams[$i]->getClass()->getName());
-                }
-            }
-
-            $reflectionClass = new \ReflectionClass($class);
-            return $reflectionClass->newInstanceArgs($params);
-        }
-        catch (\ReflectionException $e) {
-            $reflectionClass = new \ReflectionClass($class);
-
-            if (!$reflectionClass->isInstantiable()) {
-                if (isset(self::$_iocBindings[$class])) {
-                    $closure = self::$_iocBindings[$class];
-                    return $closure();
-                }
-            }
-
-            return $reflectionClass->newInstanceWithoutConstructor();
-        }
-    }
-
-    /**
-     * Bind an interface to a concrete class via closure
-     *
-     * @param string $interface
-     * @param \Closure $binding
-     */
-    public static function bind($interface, \Closure $binding)
-    {
-        self::$_iocBindings[$interface] = $binding;
     }
 }

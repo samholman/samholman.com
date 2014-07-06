@@ -1,15 +1,19 @@
 <?php
 
-use SamHolman\Base\App;
+use SamHolman\Base\IoC;
 
 class AboutTest extends PHPUnit_Framework_TestCase
 {
     public function testGet()
     {
-        $view       = App::make('SamHolman\Base\View');
-        $controller = App::make('SamHolman\Site\Controllers\About', [$view]);
+        $view       = IoC::make('SamHolman\Base\View');
+        $controller = IoC::make('SamHolman\Site\Controllers\About', [$view]);
 
-        $this->assertNotEmpty($controller->get());
+        try {
+            $this->assertNotEmpty($controller->get());
+        }
+        catch(SamHolman\Base\Exceptions\TemplateNotFoundException $e) {}
+
         $this->assertEquals('About', $view->title);
     }
 }

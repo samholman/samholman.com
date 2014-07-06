@@ -9,6 +9,7 @@ class EntityTest extends PHPUnit_Framework_TestCase
         $article = new Article('test-title', new \DateTime(), 'Test Title', 'Test content');
 
         $this->assertEquals('test-title', $article->getSlug());
+        $this->assertInstanceOf('DateTime', $article->getDate());
         $this->assertEquals('Test Title', $article->getTitle());
         $this->assertEquals('Test content', $article->getContent());
     }

@@ -39,7 +39,7 @@ class Index extends BaseAbstract
         }
 
         $page  = (int)$this->_input->get('page') ?: 1;
-        $limit = Config::get('pagination_limit');
+        $limit = Config::get('pagination_limit') ?: 1;
 
         return $article ?
             $this->_view->make(

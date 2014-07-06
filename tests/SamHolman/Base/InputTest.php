@@ -16,6 +16,7 @@ class InputTest extends PHPUnit_Framework_TestCase
     public function testGet()
     {
         $input = new Input();
+        $this->assertInternalType('array', $input->get());
         $this->assertNull($input->get('test'));
 
         $_GET['test'] = 'hello';
@@ -25,6 +26,7 @@ class InputTest extends PHPUnit_Framework_TestCase
     public function testPost()
     {
         $input = new Input();
+        $this->assertInternalType('array', $input->post());
         $this->assertNull($input->post('test'));
 
         $_POST['test'] = 'hello';
@@ -35,5 +37,11 @@ class InputTest extends PHPUnit_Framework_TestCase
     {
         $input = new Input();
         $this->assertEmpty($input->raw());
+    }
+
+    public function testJson()
+    {
+        $input = new Input();
+        $this->assertEmpty($input->json());
     }
 }

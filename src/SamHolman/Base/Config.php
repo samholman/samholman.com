@@ -31,20 +31,25 @@ class Config
      */
     public static function getInstance()
     {
-        self::init();
-        return self::$_instance;
+        return self::init();
     }
 
     /**
      * Initialise an instance
      *
+     * @param string $settingsFile
      * @return void
      */
-    public static function init()
+    public static function init($settingsFile=null)
     {
-        if (!self::$_instance) {
+        if (!self::$_instance || $settingsFile) {
             self::$_instance = new Config();
-            self::$_instance->_settings = include_once __DIR__ . '/../../../config/settings.php';
+
+            if ($settingsFile) {
+                self::$_instance->_settings = include_once $settingsFile;
+            }
         }
+
+        return self::$_instance;
     }
 }
