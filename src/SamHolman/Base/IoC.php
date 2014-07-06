@@ -9,7 +9,7 @@ class IoC
          *
          * @var array
          */
-        $_iocBindings = [];
+        $_bindings = [];
 
     /**
      * Bind an interface to a concrete class via closure
@@ -19,7 +19,7 @@ class IoC
      */
     public static function bind($interface, \Closure $binding)
     {
-        self::$_iocBindings[$interface] = $binding;
+        self::$_bindings[$interface] = $binding;
     }
 
     /**
@@ -51,8 +51,8 @@ class IoC
             $reflectionClass = new \ReflectionClass($class);
 
             if (!$reflectionClass->isInstantiable()) {
-                if (isset(self::$_iocBindings[$class])) {
-                    $closure = self::$_iocBindings[$class];
+                if (isset(self::$_bindings[$class])) {
+                    $closure = self::$_bindings[$class];
                     return $closure();
                 }
             }
