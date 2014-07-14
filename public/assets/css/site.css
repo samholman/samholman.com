@@ -169,7 +169,9 @@ article time {
     text-transform: uppercase;
 }
 
-article p {
+article p,
+article ul li,
+article ol li {
     margin: 0 0 10px 0;
     line-height: 1.4em;
 }
