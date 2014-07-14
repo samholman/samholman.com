@@ -63,16 +63,6 @@ header div.me a img {
     margin-right: 8px;
 }
 
-header div.me span.suffix {
-    display: none;
-}
-
-@media all and (min-width: 520px) {
-    header div.me span.suffix {
-        display: inline;
-    }
-}
-
 header nav {
     float: right;
     font-size: 0.9em;
@@ -98,22 +88,6 @@ header nav ul li a:hover {
     color: #ccc;
 }
 
-@media all and (max-width: 340px) {
-    header nav ul li:first-child {
-        display: none;
-    }
-}
-
-@media all and (max-width: 670px) {
-    header nav ul li {
-        display: none;
-    }
-
-    header nav ul li:nth-child(2) {
-        display: inline-block;
-    }
-}
-
 div.content {
     padding: 0 20px;
     min-width: 300px;
@@ -123,7 +97,7 @@ div.content {
 }
 
 header div.content {
-    padding: 0 40px;
+    padding: 0 50px;
 }
 
 article {
@@ -242,3 +216,46 @@ footer {
     text-align: center;
 }
 
+@media all and (max-width: 340px) {
+    header nav ul li:first-child {
+        display: none;
+    }
+}
+
+@media all and (max-width: 520px) {
+    header div.me span.suffix {
+        display: none;
+    }
+}
+
+@media all and (max-width: 670px) {
+    body {
+        padding-top: 40px;
+    }
+
+    header nav ul li {
+        display: none;
+    }
+
+    header nav ul li:nth-child(2) {
+        display: inline-block;
+    }
+
+    div.content {
+        padding: 0;
+        width: 100%;
+    }
+
+    header div.content {
+        padding: 0 20px;
+    }
+
+    article {
+        padding: 20px;
+        border-radius: 0;
+    }
+
+    ul.pagination {
+        margin: 0 10px 20px 10px;
+    }
+}
