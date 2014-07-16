@@ -50,11 +50,9 @@ class IoC
         catch (\ReflectionException $e) {
             $reflectionClass = new \ReflectionClass($class);
 
-            if (!$reflectionClass->isInstantiable()) {
-                if (isset(self::$_bindings[$class])) {
-                    $closure = self::$_bindings[$class];
-                    return $closure();
-                }
+            if (!$reflectionClass->isInstantiable() && isset(self::$_bindings[$class])) {
+                $closure = self::$_bindings[$class];
+                return $closure();
             }
 
             return $reflectionClass->newInstanceWithoutConstructor();
