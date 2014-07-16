@@ -15,7 +15,7 @@ class App
         $_input,
 
         /**
-         * @var
+         * @var string
          */
         $_output;
 
