@@ -1,51 +1,28 @@
 <?php
 
-use SamHolman\Base\App,
-    SamHolman\Base\Input;
+use SamHolman\Base\App;
 
 class AppTest extends PHPUnit_Framework_TestCase
 {
-    public function testPageNotFound()
+    public function testRun()
     {
-        $this->setExpectedException('SamHolman\Base\Exceptions\PageNotFoundException');
+        $router = Mockery::mock('SamHolman\Base\Router');
+        $router->shouldReceive('route')->andReturn('Output');
 
-        $app = new App(new Input());
-        $app->run();
+        $input  = Mockery::mock('SamHolman\Base\Input');
+        $input->shouldReceive('getRequestPath');
+
+        $app = new App($router, $input);
+        $this->assertInstanceOf('SamHolman\Base\App', $app->run());
+
+        return $app;
     }
 
-    public function testRender()
+    /**
+     * @depends testRun
+     */
+    public function testRender(App $app)
     {
-        $app = new App(new Input());
-        $this->assertEmpty($app->render());
-    }
-
-    public function testNormalRoute()
-    {
-        App::register('/test-path', 'TestController');
-
-        $input = Mockery::mock('SamHolman\Base\Input');
-        $input->shouldReceive('getRequestPath')->andReturn('/test-path');
-
-        $app = new App($input);
-        $this->assertEquals('Output', $app->run()->render());
-    }
-
-    public function testRegexRoute()
-    {
-        App::register('regex:/^\/test$/', 'TestController');
-
-        $input = Mockery::mock('SamHolman\Base\Input');
-        $input->shouldReceive('getRequestPath')->andReturn('/test');
-
-        $app = new App($input);
-        $this->assertEquals('Output', $app->run()->render());
-    }
-}
-
-class TestController
-{
-    public function get()
-    {
-        return 'Output';
+        $this->assertEquals('Output', $app->render());
     }
 }

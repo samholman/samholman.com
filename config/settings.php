@@ -1,6 +1,6 @@
 <?php
 
-use SamHolman\Base\App,
+use SamHolman\Base\Router,
     SamHolman\Base\IoC;
 
 /**
@@ -15,8 +15,8 @@ $settings = [
 /**
  * Register routes
  */
-App::register('/about', 'SamHolman\Site\Controllers\About');
-App::register('regex:/^\/([a-z0-9_\-\.]*)$/i', 'SamHolman\Site\Controllers\Index');
+Router::register('/about', 'SamHolman\Site\Controllers\About');
+Router::register('regex:/^\/([a-z0-9_\-\.]*)$/i', 'SamHolman\Site\Controllers\Index');
 
 /**
  * Interface -> Concrete class bindings for automatic IoC resolution
