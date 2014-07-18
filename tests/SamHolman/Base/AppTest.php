@@ -11,6 +11,7 @@ class AppTest extends PHPUnit_Framework_TestCase
 
         $input  = Mockery::mock('SamHolman\Base\Input');
         $input->shouldReceive('getRequestPath');
+        $input->shouldReceive('getRequestMethod');
 
         $app = new App($router, $input);
         $this->assertInstanceOf('SamHolman\Base\App', $app->run());

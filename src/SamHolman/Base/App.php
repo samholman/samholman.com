@@ -35,7 +35,7 @@ class App
      */
     public function run()
     {
-        $this->_output = $this->_router->route($this->_input->getRequestPath());
+        $this->_output = $this->_router->route($this->_input->getRequestPath(), $this->_input->getRequestMethod());
         return $this;
     }
 

@@ -17,10 +17,11 @@ class Router
      * Routes to the given controller
      *
      * @param string $path
+     * @param string $requestMethod
      * @return string
      * @throws Exceptions\PageNotFoundException
      */
-    public function route($path)
+    public function route($path, $requestMethod)
     {
         $matches = [];
 
@@ -35,8 +36,7 @@ class Router
         }
 
         if (class_exists($route)) {
-            $method = isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'get';
-            return call_user_func_array([IoC::make($route), $method], $matches);
+            return call_user_func_array([IoC::make($route), $requestMethod], $matches);
         }
 
         throw new PageNotFoundException();

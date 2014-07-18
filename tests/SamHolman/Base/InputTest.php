@@ -4,6 +4,12 @@ use SamHolman\Base\Input;
 
 class InputTest extends PHPUnit_Framework_TestCase
 {
+    public function tearDown()
+    {
+        $_SERVER['REQUEST_URI']    = null;
+        $_SERVER['REQUEST_METHOD'] = null;
+    }
+
     public function testGetRequestPath()
     {
         $input = new Input();
@@ -11,6 +17,15 @@ class InputTest extends PHPUnit_Framework_TestCase
 
         $_SERVER['REQUEST_URI'] = '/hello/world?test=true';
         $this->assertEquals('/hello/world', $input->getRequestPath());
+    }
+
+    public function testGetRequestMethod()
+    {
+        $input = new Input();
+        $this->assertEquals('get', $input->getRequestMethod());
+
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $this->assertEquals('post', $input->getRequestMethod());
     }
 
     public function testGet()
