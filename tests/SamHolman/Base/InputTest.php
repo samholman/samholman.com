@@ -10,15 +10,6 @@ class InputTest extends PHPUnit_Framework_TestCase
         $_SERVER['REQUEST_METHOD'] = null;
     }
 
-    public function testGetRequestPath()
-    {
-        $input = new Input();
-        $this->assertNull($input->getRequestPath());
-
-        $_SERVER['REQUEST_URI'] = '/hello/world?test=true';
-        $this->assertEquals('/hello/world', $input->getRequestPath());
-    }
-
     public function testGetRequestMethod()
     {
         $input = new Input();
@@ -26,6 +17,15 @@ class InputTest extends PHPUnit_Framework_TestCase
 
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $this->assertEquals('post', $input->getRequestMethod());
+    }
+
+    public function testGetRequestPath()
+    {
+        $input = new Input();
+        $this->assertNull($input->getRequestPath());
+
+        $_SERVER['REQUEST_URI'] = '/hello/world?test=true';
+        $this->assertEquals('/hello/world', $input->getRequestPath());
     }
 
     public function testGet()

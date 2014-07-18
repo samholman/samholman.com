@@ -16,12 +16,12 @@ class Router
     /**
      * Routes to the given controller
      *
-     * @param string $path
      * @param string $requestMethod
+     * @param string $path
      * @return string
      * @throws Exceptions\PageNotFoundException
      */
-    public function route($path, $requestMethod)
+    public function route($requestMethod, $path)
     {
         $matches = [];
 

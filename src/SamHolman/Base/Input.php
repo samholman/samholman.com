@@ -6,6 +6,16 @@ class Input
         $_rawInput;
 
     /**
+     * Returns the request method
+     *
+     * @return string
+     */
+    public function getRequestMethod()
+    {
+        return isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'get';
+    }
+
+    /**
      * Returns the request path
      *
      * @return string
@@ -14,16 +24,6 @@ class Input
     {
         $parts = parse_url(!empty($_SERVER['REQUEST_URI']) ? 'http://example.org' . $_SERVER['REQUEST_URI'] : false);
         return !empty($parts['path']) ? $parts['path'] : null;
-    }
-
-    /**
-     * Returns the request method
-     *
-     * @return string
-     */
-    public function getRequestMethod()
-    {
-        return isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'get';
     }
 
     /**
