@@ -9,7 +9,7 @@ class RouterTest extends PHPUnit_Framework_TestCase
         $this->setExpectedException('SamHolman\Base\Exceptions\PageNotFoundException');
 
         $router = new Router();
-        $router->route('/test');
+        $router->route('/test', 'get');
     }
 
     public function testRoute()
@@ -17,7 +17,7 @@ class RouterTest extends PHPUnit_Framework_TestCase
         Router::register('/test-path', 'TestController');
 
         $router = new Router();
-        $this->assertEquals('Output', $router->route('/test-path'));
+        $this->assertEquals('Get output', $router->route('/test-path', 'get'));
     }
 
     public function testRegexRoute()
@@ -25,7 +25,15 @@ class RouterTest extends PHPUnit_Framework_TestCase
         Router::register('regex:/^\/test$/', 'TestController');
 
         $router = new Router();
-        $this->assertEquals('Output', $router->route('/test'));
+        $this->assertEquals('Get output', $router->route('/test', 'get'));
+    }
+
+    public function testPostRoute()
+    {
+        Router::register('/test-path', 'TestController');
+
+        $router = new Router();
+        $this->assertEquals('Post output', $router->route('/test-path', 'post'));
     }
 }
 
@@ -33,6 +41,12 @@ class TestController
 {
     public function get()
     {
-        return 'Output';
+        return 'Get output';
+    }
+
+    public function post()
+    {
+        return 'Post output';
     }
 }
+

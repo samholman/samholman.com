@@ -17,6 +17,16 @@ class Input
     }
 
     /**
+     * Returns the request method
+     *
+     * @return string
+     */
+    public function getRequestMethod()
+    {
+        return isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'get';
+    }
+
+    /**
      * Returns data from get
      *
      * @param string $var
