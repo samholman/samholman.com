@@ -1,7 +1,7 @@
 <?php namespace SamHolman\Site\Controllers;
 
 use \SamHolman\Base\Input,
-    \SamHolman\Base\Response,
+    \SamHolman\Base\Http\Response,
     \SamHolman\Base\View,
     \SamHolman\Base\Pagination,
     \SamHolman\Base\Config,

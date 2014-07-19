@@ -23,13 +23,6 @@ Router::register('regex:/^\/([a-z0-9_\-\.]+)$/i', 'SamHolman\Site\Controllers\Bl
  * Interface -> Concrete class bindings for automatic IoC resolution
  */
 IoC::bind(
-    'SamHolman\Base\Response',
-    function() {
-        return IoC::make('\SamHolman\Base\Http\Response');
-    }
-);
-
-IoC::bind(
     'SamHolman\Site\Article\Repository',
     function () use ($settings) {
         if (!is_dir($settings['content_dir'])) {

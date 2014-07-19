@@ -1,6 +1,6 @@
 <?php namespace SamHolman\Base\Http;
 
-class Response implements \SamHolman\Base\Response
+class Response
 {
     /**
      * Send a HTTP header

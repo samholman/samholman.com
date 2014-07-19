@@ -9,7 +9,7 @@ class BlogTest extends PHPUnit_Framework_TestCase
         $input = Mockery::mock('SamHolman\Base\Input');
         $input->shouldReceive('get')->with('page')->andReturn(0);
 
-        $response   = Mockery::mock('SamHolman\Base\Response');
+        $response   = Mockery::mock('SamHolman\Base\Http\Response');
         $pagination = Mockery::mock('SamHolman\Base\Pagination');
         $pagination->shouldReceive('get');
 
@@ -37,7 +37,7 @@ class BlogTest extends PHPUnit_Framework_TestCase
     {
         $input = Mockery::mock('SamHolman\Base\Input');
 
-        $response = Mockery::mock('SamHolman\Base\Response');
+        $response = Mockery::mock('SamHolman\Base\Http\Response');
         $response->shouldReceive('header');
 
         $pagination = Mockery::mock('SamHolman\Base\Pagination');
