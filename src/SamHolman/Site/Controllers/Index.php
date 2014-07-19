@@ -7,7 +7,7 @@ use \SamHolman\Base\Input,
     \SamHolman\Base\Config,
     \SamHolman\Site\Article\Service as ArticleService;
 
-class Index extends BaseAbstract
+class Index
 {
     private
         $_input,
