@@ -15,8 +15,9 @@ $settings = [
 /**
  * Register routes
  */
+Router::register('/', 'SamHolman\Site\Controllers\Blog@index');
 Router::register('/about', 'SamHolman\Site\Controllers\About');
-Router::register('regex:/^\/([a-z0-9_\-\.]*)$/i', 'SamHolman\Site\Controllers\Index');
+Router::register('regex:/^\/([a-z0-9_\-\.]+)$/i', 'SamHolman\Site\Controllers\Blog@article');
 
 /**
  * Interface -> Concrete class bindings for automatic IoC resolution
