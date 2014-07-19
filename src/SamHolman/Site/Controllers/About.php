@@ -2,7 +2,7 @@
 
 use \SamHolman\Base\View;
 
-class About extends BaseAbstract
+class About
 {
     private
         $_view;

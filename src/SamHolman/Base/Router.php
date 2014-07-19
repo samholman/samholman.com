@@ -35,8 +35,11 @@ class Router
             }
         }
 
-        if (class_exists($route)) {
-            return call_user_func_array([IoC::make($route), $requestMethod], $matches);
+        $exploded = explode('@', $route);
+        list($class, $method) = count($exploded) == 2 ? $exploded : [$route, $requestMethod];
+
+        if (class_exists($class)) {
+            return call_user_func_array([IoC::make($class), $method], $matches);
         }
 
         throw new PageNotFoundException();

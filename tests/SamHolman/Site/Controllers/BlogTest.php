@@ -2,9 +2,9 @@
 
 use SamHolman\Base\IoC;
 
-class IndexTest extends PHPUnit_Framework_TestCase
+class BlogTest extends PHPUnit_Framework_TestCase
 {
-    public function testGet()
+    public function testIndex()
     {
         $input = Mockery::mock('SamHolman\Base\Input');
         $input->shouldReceive('get')->with('page')->andReturn(0);
@@ -21,10 +21,10 @@ class IndexTest extends PHPUnit_Framework_TestCase
         );
         $service->shouldReceive('getArticleCount')->andReturn(1);
 
-        $controller = IoC::make('SamHolman\Site\Controllers\Index', [$input, $response, $view, $pagination, $service]);
+        $controller = IoC::make('SamHolman\Site\Controllers\Blog', [$input, $response, $view, $pagination, $service]);
 
         try {
-            $this->assertNotEmpty($controller->get());
+            $this->assertNotEmpty($controller->index());
         }
         catch(SamHolman\Base\Exceptions\TemplateNotFoundException $e) {}
 
@@ -33,16 +33,14 @@ class IndexTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Title', $view->articles[0]->getTitle());
     }
 
-    public function testGetWithArticle()
+    public function testArticle()
     {
         $input = Mockery::mock('SamHolman\Base\Input');
-        $input->shouldReceive('get')->with('page')->andReturn(0);
 
         $response = Mockery::mock('SamHolman\Base\Response');
         $response->shouldReceive('header');
 
         $pagination = Mockery::mock('SamHolman\Base\Pagination');
-        $pagination->shouldReceive('get');
 
         $view = IoC::make('SamHolman\Base\View');
 
@@ -52,13 +50,13 @@ class IndexTest extends PHPUnit_Framework_TestCase
         );
         $service->shouldReceive('getArticle')->with('another-article')->andReturn(false);
 
-        $controller = IoC::make('SamHolman\Site\Controllers\Index', [$input, $response, $view, $pagination, $service]);
+        $controller = IoC::make('SamHolman\Site\Controllers\Blog', [$input, $response, $view, $pagination, $service]);
 
         /**
          * First try a 404
          */
         try {
-            $this->assertNotEmpty($controller->get('another-article'));
+            $this->assertNotEmpty($controller->article('another-article'));
         }
         catch(SamHolman\Base\Exceptions\TemplateNotFoundException $e) {}
 
@@ -68,7 +66,7 @@ class IndexTest extends PHPUnit_Framework_TestCase
          * But this one should exist
          */
         try {
-            $this->assertNotEmpty($controller->get('article'));
+            $this->assertNotEmpty($controller->article('article'));
         }
         catch(SamHolman\Base\Exceptions\TemplateNotFoundException $e) {}
 
