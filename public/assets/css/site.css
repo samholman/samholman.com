@@ -205,7 +205,6 @@ ul.pagination a {
     font-size: 0.9em;
     font-weight: bold;
     color: #333;
-    text-transform: uppercase;
 }
 
 ul.pagination a:hover {
