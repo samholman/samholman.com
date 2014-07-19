@@ -7,7 +7,10 @@ class ViewTest extends PHPUnit_Framework_TestCase
 {
     public function testMake()
     {
-        $view = new View();
+        $config = Mockery::mock('SamHolman\Base\Config');
+        $config->shouldReceive('get');
+
+        $view = new View($config);
 
         try {
             $view->make('template', ['var' => '#value']);

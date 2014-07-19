@@ -9,36 +9,21 @@ class Config
         $_settings = [];
 
     /**
-     * Force singleton
-     */
-    private function __construct() {}
-
-    /**
      * Returns a config setting
      *
      * @param string $config
      * @return mixed|null
      */
-    public static function get($config)
+    public function get($config)
     {
-        return isset(self::getInstance()->_settings[$config]) ? self::getInstance()->_settings[$config] : null;
+        return isset(self::init()->_settings[$config]) ? self::init()->_settings[$config] : null;
     }
 
     /**
-     * Return an instance of this config
-     *
-     * @return Config
-     */
-    public static function getInstance()
-    {
-        return self::init();
-    }
-
-    /**
-     * Initialise an instance
+     * Returns an instance
      *
      * @param string $settingsFile
-     * @return void
+     * @return Config
      */
     public static function init($settingsFile=null)
     {

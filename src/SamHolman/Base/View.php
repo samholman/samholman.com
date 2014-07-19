@@ -6,7 +6,13 @@ use \SamHolman\Base\Exceptions\TemplateNotFoundException,
 class View
 {
     private
+        $_config,
         $_vars = [];
+
+    public function __construct(Config $config)
+    {
+        $this->_config = $config;
+    }
 
     /**
      * @param string $template
@@ -23,7 +29,7 @@ class View
             }
         }
 
-        $templatePath = ($viewDir ? $viewDir : Config::get('view_dir')) . DIRECTORY_SEPARATOR . $template . '.phtml';
+        $templatePath = ($viewDir ? $viewDir : $this->_config->get('view_dir')) . DIRECTORY_SEPARATOR . $template . '.phtml';
 
         if (!file_exists($templatePath)) {
             throw new TemplateNotFoundException('Template "' . $template . '" not found.');

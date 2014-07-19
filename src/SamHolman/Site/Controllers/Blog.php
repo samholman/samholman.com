@@ -10,14 +10,16 @@ use \SamHolman\Base\Input,
 class Blog
 {
     private
+        $_config,
         $_input,
         $_response,
         $_view,
         $_pagination,
         $_service;
 
-    public function __construct(Input $input, Response $response, View $view, Pagination $pagination, ArticleService $service)
+    public function __construct(Config $config, Input $input, Response $response, View $view, Pagination $pagination, ArticleService $service)
     {
+        $this->_config     = $config;
         $this->_input      = $input;
         $this->_response   = $response;
         $this->_view       = $view;
@@ -33,7 +35,7 @@ class Blog
     public function index()
     {
         $page  = (int)$this->_input->get('page') ?: 1;
-        $limit = Config::get('pagination_limit') ?: 1;
+        $limit = $this->_config->get('pagination_limit') ?: 1;
 
         return $this->_view->make(
             'pages/article/list', [

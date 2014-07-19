@@ -6,6 +6,9 @@ class BlogTest extends PHPUnit_Framework_TestCase
 {
     public function testIndex()
     {
+        $config = Mockery::mock('SamHolman\Base\Config');
+        $config->shouldReceive('get');
+
         $input = Mockery::mock('SamHolman\Base\Input');
         $input->shouldReceive('get')->with('page')->andReturn(0);
 
@@ -21,7 +24,7 @@ class BlogTest extends PHPUnit_Framework_TestCase
         );
         $service->shouldReceive('getArticleCount')->andReturn(1);
 
-        $controller = IoC::make('SamHolman\Site\Controllers\Blog', [$input, $response, $view, $pagination, $service]);
+        $controller = IoC::make('SamHolman\Site\Controllers\Blog', [$config, $input, $response, $view, $pagination, $service]);
 
         try {
             $this->assertNotEmpty($controller->index());
@@ -35,6 +38,9 @@ class BlogTest extends PHPUnit_Framework_TestCase
 
     public function testArticle()
     {
+        $config = Mockery::mock('SamHolman\Base\Config');
+        $config->shouldReceive('get');
+
         $input = Mockery::mock('SamHolman\Base\Input');
 
         $response = Mockery::mock('SamHolman\Base\Http\Response');
@@ -50,7 +56,7 @@ class BlogTest extends PHPUnit_Framework_TestCase
         );
         $service->shouldReceive('getArticle')->with('another-article')->andReturn(false);
 
-        $controller = IoC::make('SamHolman\Site\Controllers\Blog', [$input, $response, $view, $pagination, $service]);
+        $controller = IoC::make('SamHolman\Site\Controllers\Blog', [$config, $input, $response, $view, $pagination, $service]);
 
         /**
          * First try a 404

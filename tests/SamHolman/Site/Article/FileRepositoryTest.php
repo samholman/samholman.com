@@ -11,10 +11,8 @@ class FileRepositoryTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    public function testFindAll()
+    private function getFile($filename)
     {
-        $filename = '310514-test-article.md';
-
         $articleFile = Mockery::Mock('DirectoryIterator');
         $articleFile->shouldReceive('getFilename')->andReturn($filename);
         $articleFile->shouldReceive('getPathname')->andReturn('/tmp/' . $filename);
@@ -26,12 +24,21 @@ class FileRepositoryTest extends PHPUnit_Framework_TestCase
         $file->shouldReceive('getFilename')->andReturn($filename);
         $file->shouldReceive('getFileInfo')->andReturn($articleFile);
 
+        return $file;
+    }
+
+    public function testFindAll()
+    {
+        $file1 = $this->getFile('310514-test-article.md');
+        $file2 = $this->getFile('190714-test-article-2.md');
+
         $directoryIterator = Mockery::mock('DirectoryIterator');
         $directoryIterator->shouldReceive('rewind');
-        $directoryIterator->shouldReceive('valid')->once()->andReturn(true);
-        $directoryIterator->shouldReceive('valid')->between(1, 1)->andReturn(false);
-        $directoryIterator->shouldReceive('current')->once()->andReturn($file);
-        $directoryIterator->shouldReceive('next')->once()->andReturn(false);
+        $directoryIterator->shouldReceive('valid')->twice()->andReturn(true);
+        $directoryIterator->shouldReceive('valid')->once()->andReturn(false);
+        $directoryIterator->shouldReceive('current')->once()->andReturn($file1);
+        $directoryIterator->shouldReceive('current')->once()->andReturn($file2);
+        $directoryIterator->shouldReceive('next')->twice()->andReturn(true);
 
         $fileReader = Mockery::mock('\SamHolman\Base\File\Reader');
         $fileReader->shouldReceive('read')->andReturn('File contents');
@@ -41,9 +48,8 @@ class FileRepositoryTest extends PHPUnit_Framework_TestCase
             ->andReturn(['310514-test-article', new DateTime(), 'Test Article']);
 
         $repo = new FileRepository($directoryIterator, $fileReader, $filenameParser);
-        $articles = $repo->findAll();
 
-        foreach ($articles as $article) {
+        foreach ($repo->findAll() as $article) {
             $this->assertEquals('Test Article', $article->getTitle());
             $this->assertEquals('File contents', $article->getContent());
         }
@@ -77,6 +83,21 @@ class FileRepositoryTest extends PHPUnit_Framework_TestCase
 
         $article = $repo->find($slug);
         $this->assertEquals($title, $article->getTitle());
+    }
+
+    public function testFindFailsWithInvalidFile()
+    {
+        $directoryIterator = Mockery::mock('DirectoryIterator');
+        $directoryIterator->shouldReceive('getPath');
+
+        $fileReader = Mockery::mock('\SamHolman\Base\File\Reader');
+        $fileReader->shouldReceive('exists')->andReturn(false);
+
+        $filenameParser = Mockery::mock('\SamHolman\Site\Article\FilenameParser');
+
+        $repo = new FileRepository($directoryIterator, $fileReader, $filenameParser);
+
+        $this->assertNull($repo->find('invalid'));
     }
 
     public function testCount()
