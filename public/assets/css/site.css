@@ -189,7 +189,7 @@ article pre {
 }
 
 article #disqus_thread {
-    margin-top: 30px;
+    margin: 10px 0;
 }
 
 ul.pagination {
