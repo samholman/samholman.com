@@ -1,4 +1,8 @@
 {
+    "name": "samholman/site",
+    "description": "Just my personal website",
+    "homepage": "https://samholman.com",
+
     "autoload": {
         "psr-4": {
             "SamHolman\\": "src/SamHolman/"
